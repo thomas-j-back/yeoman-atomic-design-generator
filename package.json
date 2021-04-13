@@ -1,5 +1,5 @@
 {
-  "name": "@intellective/yeoman-atomic-design-generator",
+  "name": "generator-react-atomic",
   "version": "1.0.0",
   "description": "Add/remove components within a react project structured by atomic design",
   "scripts": {
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/thomas-j-back/yeoman-atomic-design-generator#readme",
   "dependencies": {
-    "yeoman-generator": "^5.2.0"
+    "yeoman-generator": "^4.13.0"
   }
 }
