@@ -1,36 +1,64 @@
 const Generator = require("yeoman-generator");
 const config = require("../../config");
+const fs = require("fs");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
+    this.argument("command", { type: String, required: true });
+    this.argument("atomic_element", { type: String, required: false });
+  }
 
-    this.command = args[0];
-    this.atomic_entity = args[1];
-    this.entity_name = args[2];
+  process() {
+    if (!this._validateProject()) return;
+    this.options.command == "create" && this._create();
+    this.options.command == "add" && this._add();
+  }
+
+  _create() {
+    this._createPrompts();
+  }
+
+  _add() {
+    this._addPrompts();
   }
 
   /**
    * Handle generator command accordingly
    */
-  handleCommand() {
-    if (this.command && typeof this[this.command] === "function") {
-      this[this.command]();
-    } else {
+  _validateProject() {
+    //Check for package.json and src
+    try {
+      if (fs.existsSync(config.PKG_PATH)) {
+        return true;
+      }
+    } catch (e) {
       console.error(
-        "Invalid argument at index 0. Valid options are create and add"
+        "This generator was not called from a valid React project root. Please call it at the root of a React project."
       );
-      return;
+      return false;
     }
   }
-  /**
-   * Will initialize the folder structure
-   * if none already exist under src/components
-   */
-  create() {}
 
-  /**
-   * Add an atomic element
-   */
-  add() {}
+  async _createPrompts() {
+    this.answers = await this.prompt([
+      {
+        type: "input",
+        name: "target_path",
+        message:
+          "What path would you like to initialize the folder structure in?",
+        default: "./src/components",
+      },
+    ]);
+  }
+
+  async _addPrompts() {
+    this.answers = await this.prompt([
+      {
+        type: "input",
+        name: "atomic_element_name",
+        message: "Which Atomic element would you like to add?",
+      },
+    ]);
+  }
 };
