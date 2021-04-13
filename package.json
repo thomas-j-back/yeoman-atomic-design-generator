@@ -1,0 +1,27 @@
+{
+  "name": "@intellective/yeoman-atomic-design-generator",
+  "version": "1.0.0",
+  "description": "Add/remove components within a react project structured by atomic design",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomas-j-back/yeoman-atomic-design-generator.git"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Thomas Back",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomas-j-back/yeoman-atomic-design-generator/issues"
+  },
+  "homepage": "https://github.com/thomas-j-back/yeoman-atomic-design-generator#readme",
+  "dependencies": {
+    "yeoman-generator": "^5.2.0"
+  }
+}
