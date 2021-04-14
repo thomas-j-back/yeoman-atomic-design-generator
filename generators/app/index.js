@@ -1,12 +1,14 @@
 const Generator = require("yeoman-generator");
 const config = require("../../config");
 const fs = require("fs");
+const FileUtils = require("./file_utils");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
     this.argument("command", { type: String, required: true });
     this.argument("atomic_element", { type: String, required: false });
+    this.fileUtils = new FileUtils();
   }
 
   process() {
@@ -28,6 +30,13 @@ module.exports = class extends Generator {
         default: "./src/components",
       },
     ]);
+
+    //Create directory if doesn't exist, then create paths within
+    config.ATOMIC_ELEMENTS.forEach((element) => {
+      this.fileUtils.createDirectories(
+        this.answers.target_path + "/" + element
+      );
+    });
   }
 
   /**
