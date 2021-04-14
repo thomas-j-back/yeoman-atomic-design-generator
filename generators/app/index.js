@@ -15,16 +15,39 @@ module.exports = class extends Generator {
     this.options.command == "add" && this._add();
   }
 
+  /**
+   * Create a boilerplate atomic structure
+   */
   _create() {
-    this._createPrompts();
-  }
-
-  _add() {
-    this._addPrompts();
+    this._prompt([
+      {
+        type: "input",
+        name: "target_path",
+        message:
+          "What path would you like to initialize the folder structure in?",
+        default: "./src/components",
+      },
+    ]);
   }
 
   /**
-   * Handle generator command accordingly
+   * Insert a single atomic element within
+   * the existing structure
+   */
+  _add() {
+    this._prompt([
+      {
+        type: "input",
+        name: "atomic_element_name",
+        message: "Which Atomic element would you like to add?",
+      },
+    ]);
+  }
+
+  /**
+   * Validates current path is the
+   * root of a react project
+   * @returns
    */
   _validateProject() {
     //Check for package.json and src
@@ -40,25 +63,12 @@ module.exports = class extends Generator {
     }
   }
 
-  async _createPrompts() {
-    this.answers = await this.prompt([
-      {
-        type: "input",
-        name: "target_path",
-        message:
-          "What path would you like to initialize the folder structure in?",
-        default: "./src/components",
-      },
-    ]);
-  }
-
-  async _addPrompts() {
-    this.answers = await this.prompt([
-      {
-        type: "input",
-        name: "atomic_element_name",
-        message: "Which Atomic element would you like to add?",
-      },
-    ]);
+  /**
+   * Create an async prompt with each prompt
+   * option passed in as array
+   * @param {array<Object>} prompts_list
+   */
+  async _prompt(prompts_list) {
+    this.answers = await this.prompt(prompts_list);
   }
 };
