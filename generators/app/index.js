@@ -15,6 +15,6 @@ module.exports = class extends Generator {
   process() {
     if (!this.fileUtils._validateProject(this.destinationRoot())) return;
     this.options.command == "create" && create.call(this);
-    this.options.command == "add" && addElement.call(this);
+    this.options.command == "add-element" && addElement.call(this);
   }
 };
