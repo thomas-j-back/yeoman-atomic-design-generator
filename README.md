@@ -1,6 +1,6 @@
 # React Atomic Design Generator
 
-yeoman generator to manage atomic design elements within a react project
+yeoman generator to manage and quickly create organized Atomic design elements within a React project
 
 ## Quick Start
 
