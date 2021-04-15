@@ -51,7 +51,33 @@ module.exports = class extends Generator {
         name: "atomic_element_name",
         message: "Which Atomic element would you like to add?",
       },
+      {
+        type: "input",
+        name: "element_name",
+        message:
+          "What is the name of the element you would like to create? Ex: Button",
+      },
     ]);
+
+    let atomic_element_name = this.answers.atomic_element_name;
+    if (config.ATOMIC_ELEMENTS.indexOf(atomic_element_name) == -1) {
+      this.log(
+        "Invalid element entered. Valid element names are " +
+          config.ATOMIC_ELEMENTS.join(", ") +
+          "."
+      );
+    }
+
+    //Write to the objects
+    this.fs.copyTpl(
+      this.templatePath("element/_class-component.js"),
+      this.destinationPath(
+        `./src/components/${atomic_element_name}/${this.answers.element_name}/index.js`
+      ),
+      {
+        name: this.answers.element_name,
+      }
+    );
   }
 
   /**
