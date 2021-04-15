@@ -1,7 +1,8 @@
 const Generator = require("yeoman-generator");
-const config = require("../../config");
+const config = require("./config");
 const fs = require("fs");
 const FileUtils = require("./file_utils");
+const { addElement, create } = require("./functions");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -12,90 +13,8 @@ module.exports = class extends Generator {
   }
 
   process() {
-    if (!this._validateProject()) return;
-    this.options.command == "create" && this._create();
-    this.options.command == "add" && this._add();
-  }
-
-  /**
-   * Create a boilerplate atomic structure
-   */
-  async _create() {
-    this.answers = await this.prompt([
-      {
-        type: "input",
-        name: "target_path",
-        message:
-          "What path would you like to initialize the folder structure in?",
-        default: "./src/components",
-        store: true,
-      },
-    ]);
-
-    //Create directory if doesn't exist, then create paths within
-    config.ATOMIC_ELEMENTS.forEach((element) => {
-      this.fileUtils.createDirectories(
-        this.answers.target_path + "/" + element
-      );
-    });
-  }
-
-  /**
-   * Insert a single atomic element within
-   * the existing structure
-   */
-  async _add() {
-    this.answers = await this.prompt([
-      {
-        type: "input",
-        name: "atomic_element_name",
-        message: "Which Atomic element would you like to add?",
-      },
-      {
-        type: "input",
-        name: "element_name",
-        message:
-          "What is the name of the element you would like to create? Ex: Button",
-      },
-    ]);
-
-    let atomic_element_name = this.answers.atomic_element_name;
-    if (config.ATOMIC_ELEMENTS.indexOf(atomic_element_name) == -1) {
-      this.log(
-        "Invalid element entered. Valid element names are " +
-          config.ATOMIC_ELEMENTS.join(", ") +
-          "."
-      );
-    }
-
-    //Write to the objects
-    this.fs.copyTpl(
-      this.templatePath("element/_class-component.js"),
-      this.destinationPath(
-        `./src/components/${atomic_element_name}/${this.answers.element_name}/index.js`
-      ),
-      {
-        name: this.answers.element_name,
-      }
-    );
-  }
-
-  /**
-   * Validates current path is the
-   * root of a react project
-   * @returns
-   */
-  _validateProject() {
-    //Check for package.json and src
-    try {
-      if (fs.existsSync(config.PKG_PATH)) {
-        return true;
-      }
-    } catch (e) {
-      console.error(
-        "This generator was not called from a valid React project root. Please call it at the root of a React project."
-      );
-      return false;
-    }
+    if (!this.fileUtils._validateProject(this.destinationRoot())) return;
+    this.options.command == "create" && create.call(this);
+    this.options.command == "add" && addElement.call(this);
   }
 };
