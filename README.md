@@ -51,3 +51,8 @@ with an Atom being chosen as the element type
         - index.css
         - test.js
 ```
+
+#### Future features
+
+- Enhanced templates for tests depending on testing environment/framework
+- More React Component template types
