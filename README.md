@@ -41,8 +41,8 @@ will prompt answers for the following:
 2. The name of the new element (as the react component name)
 3. The type of React component. ie functional, class, etc
 
-After answering the generator will create the following files
-with an Atom being chosen as the element type
+After answering the generator will create the following file structure
+(with Atom being chosen as an example element type)
 
 ```
 - Atoms
