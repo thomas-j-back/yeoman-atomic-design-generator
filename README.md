@@ -6,7 +6,7 @@ yeoman generator to manage and quickly create organized Atomic design elements w
 
 Before usage, install [yeoman](https://yeoman.io/).
 
-Use the following npm command to install
+Use the following npm command to install:
 
 > npm install -g yo
 
@@ -16,13 +16,13 @@ line:
 > npm install -g generator-react-atomic
 
 Please ensure the root directory of your project has a package.json with react
-as a dependency or the generator will **not** register a valid project
+as a dependency or the generator will **not** register a valid project.
 
 ## Options for generating
 
 ### Create
 
-In order to create the scaffolding from scratch you may run the following command
+In order to create the scaffolding from scratch you may run the following command:
 
 > yo react-atomic create
 
@@ -31,7 +31,7 @@ The default is `./src/components`
 
 ### Add Element
 
-The command
+The command:
 
 > yo react-atomic add-element
 
