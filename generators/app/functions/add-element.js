@@ -16,8 +16,6 @@ async function addElement() {
     this.answers = await this.prompt([config.PROMPTS.target_path]);
   }
 
-  console.log(this.config.get("target_path"));
-
   //Write to the objects
   let destination_path = `${this.config.get(
     "target_path"
