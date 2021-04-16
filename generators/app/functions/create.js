@@ -3,16 +3,7 @@ const config = require("../config");
  * Create a boilerplate atomic structure
  */
 async function create() {
-  this.answers = await this.prompt([
-    {
-      type: "input",
-      name: "target_path",
-      message:
-        "What path would you like to initialize the folder structure in?",
-      default: "./src/components",
-      store: true,
-    },
-  ]);
+  this.answers = await this.prompt([config.PROMPTS.target_path]);
 
   //Create directory if doesn't exist, then create paths within
   config.ATOMIC_ELEMENTS.forEach((element) => {

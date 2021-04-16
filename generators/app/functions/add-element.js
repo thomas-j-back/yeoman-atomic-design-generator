@@ -5,38 +5,28 @@ const config = require("../config");
  */
 async function addElement() {
   this.answers = await this.prompt([
-    {
-      type: "list",
-      name: "atomic_element_name",
-      message: "Which Atomic element would you like to add?",
-      choices: config.ATOMIC_ELEMENTS,
-    },
-    {
-      type: "input",
-      name: "element_name",
-      message:
-        "What is the name of the element you would like to create? Ex: Button",
-    },
-    {
-      type: "list",
-      name: "component_type",
-      message:
-        "What is the type of the React component you would like to create?",
-      choices: config.REACT_COMPONENT_TYPES,
-    },
+    config.PROMPTS.which_element,
+    config.PROMPTS.component_name,
+    config.PROMPTS.which_component_type,
   ]);
 
-  const atomic_element_name = this.answers.atomic_element_name,
-    element_name = this.answers.element_name,
-    component_type = this.answers.component_type;
+  const { atomic_element_name, component_name, component_type } = this.answers;
+
+  if (!this.config.get("target_path")) {
+    this.answers = await this.prompt([config.PROMPTS.target_path]);
+  }
+
+  console.log(this.config.get("target_path"));
 
   //Write to the objects
-  let destination_path = `./src/components/${atomic_element_name}/${element_name}/`;
+  let destination_path = `${this.config.get(
+    "target_path"
+  )}/${atomic_element_name}/${component_name}/`;
   this.fs.copyTpl(
     this.templatePath(`element/_${component_type}-component.js`),
     this.destinationPath(destination_path + "index.js"),
     {
-      name: element_name,
+      name: component_name,
     }
   );
 
@@ -51,10 +41,10 @@ async function addElement() {
     this.templatePath("element/_test.js"),
     this.destinationPath(destination_path + "test.js"),
     {
-      name: element_name,
+      name: component_name,
     }
   );
-  this.log("Successfully created " + element_name + "!");
+  this.log("Successfully created " + component_name + "!");
 }
 
 module.exports = addElement;
